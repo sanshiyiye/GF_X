@@ -1,6 +1,6 @@
 [Unity 2D/3D通用性能优化方案 万人同屏插件 大规模渲染、移动、索敌、碰撞检测、寻路](https://efunstudio.cn/)
 
-# GF_X
+# GF_X(AI)
 点击链接加入群聊【GF_X自动化游戏框架】：[QQ交流群:1035236947](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=sA2mRXcNn1vQb5dz8pe1wndL9jr8gOKA&authKey=hk7wZDWjniHi2kJexJxSMZsgmXgf%2B3JDRQWCaYih9mF7V%2ByZ%2F%2BzMG4fThy2vF2Ze&noverify=0&group_code=1035236947)
 ### 介绍
 [GameFramework](https://github.com/EllanJiang/GameFramework) + [HybridCLR](https://github.com/focus-creative-games/hybridclr)，通过静态扩展方式，极度简化或扩展框架接口，并编写了大量自动化工具，主打一个工业化生产工作流，追求极致性能和开发效率，使GF对新手友好，开箱即用。
@@ -96,3 +96,4 @@ GF_HybridCLR通过Procedure(流程)来走游戏逻辑，游戏入口流程为Lau
 [UniTask(零分配Task,gc优化)](https://github.com/Cysharp/UniTask)
 
 [ZString(零分配StringBuilder,字符串连接、格式化gc优化)](https://github.com/Cysharp/ZString)
+
