@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "serena": {
+      "command": "/Users/wangxiaoguang/opt/anaconda3/envs/serena/bin/serena-mcp-server",
+      "args": [
+        "--port",
+        "25565"
+      ]
+    },
+    "unityMCP": {
+      "url": "http://localhost:8080/mcp"
+    }
+  }
+}

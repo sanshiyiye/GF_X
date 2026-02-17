@@ -21,4 +21,5 @@
 /Tools/Jenkins/UnityBuildLog.log
 /Tools/LocalizationTextsScannerOutput.txt
 /HybridCLRData
+*.DS_Store
 /Assets/Resources/AotDlls
