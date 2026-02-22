@@ -182,4 +182,95 @@ flowchart LR
 
 ---
 
+## 附录2：各流程运行时调用示例代码
+
+以下示例展示配置表、数据表、多语言表在运行时的加载与读取方式（需在配置表/数据表/多语言表已通过 PreloadProcedure 等流程加载完成后使用）。`GF` 为框架入口，具体 API 以当前工程为准。
+
+### 配置表（Config）运行时示例
+
+```csharp
+// 加载配置表（通常在 PreloadProcedure 中按 AppConfigs.Configs 统一加载）
+var appConfig = await AppConfigs.GetInstanceSync();
+GF.Config.LoadConfig("GameConfig", appConfig.LoadFromBytes, this);
+
+// 读取配置项（加载完成事件回调后使用）
+string value = GF.Config.GetString("SomeKey");
+int intVal = GF.Config.GetInt("IntKey");
+float floatVal = GF.Config.GetFloat("FloatKey");
+bool boolVal = GF.Config.GetBool("BoolKey");
+Vector2 vec2 = GF.Config.GetVector2("Vec2Key");
+Vector3 vec3 = GF.Config.GetVector3("Vec3Key");
+// 判断是否存在
+if (GF.Config.HasConfig("Key")) { ... }
+```
+
+### 数据表（DataTable）运行时示例
+
+```csharp
+// 加载数据表（通常在 PreloadProcedure 中按 AppConfigs.DataTables 统一加载）
+var appConfig = await AppConfigs.GetInstanceSync();
+GF.DataTable.LoadDataTable("LevelTable", appConfig.LoadFromBytes, this);
+
+// 加载完成后获取表并读取行（表名为导表生成的 C# 行类型名，如 LevelTable、LanguagesTable）
+var levelTb = GF.DataTable.GetDataTable<LevelTable>();
+var row = levelTb.GetDataRow(1);                    // 按 ID 取一行
+var rowByCond = levelTb.GetDataRow(r => r.LevelId == 5);
+var minRow = levelTb.MinIdDataRow;
+levelTb.GetAllDataRows(list);                       // 填入所有行
+// 使用行字段
+int id = row.Id;
+string name = row.LevelName;
+```
+
+### 多语言表（Language）运行时示例
+
+```csharp
+// 加载多语言表（通常在 PreloadProcedure.InitAndLoadLanguage 中根据当前语言加载）
+// 先通过 LanguagesTable 取得当前语言对应的资源名，再加载
+var langTb = GF.DataTable.GetDataTable<LanguagesTable>();
+var langRow = langTb.GetDataRow(r => r.LanguageKey == GF.Localization.Language.ToString());
+GF.Localization.LoadLanguage(langRow.AssetName, appConfig.LoadFromBytes, this);
+
+// 或使用异步重载（内部会取 AppConfigs.LoadFromBytes）
+GF.Localization.LoadLanguage(GF.Localization.Language.ToString(), this);
+
+// 读取多语言文本（加载完成后使用）
+string text = GF.Localization.GetString("Key");     // 与多语言 Excel 中 key 对应
+```
+
+---
+
+## 附录3：运行时资源加载目录与项目代码目录
+
+本附录说明与 AAAGameData 导表流程相关的**运行时资源加载目录**（导表产出物所在位置，供运行时加载）以及**项目代码目录**（脚本与程序集所在位置）。更完整的目录层级与说明见 [项目目录结构](项目目录结构.md) 中「四、Assets」一节。
+
+### 运行时资源加载目录
+
+以下目录位于 `Assets/AAAGame` 下，由 AAAGameData 导表工具写入，运行时通过 GF 的 ConfigComponent、DataTableComponent、LocalizationComponent 按资源路径加载（路径由 `UtilityBuiltin.AssetsPath.GetConfigPath` / `GetDataTablePath` / `GetLanguagePath` 等拼装）。
+
+| 路径（相对 Assets）       | 说明                                                                 |
+| ------------------------- | -------------------------------------------------------------------- |
+| `AAAGame/Config`          | 配置表导表产出：.txt、.bytes。运行时按配置表名（如 GameConfig）加载。   |
+| `AAAGame/DataTable`       | 数据表导表产出：.txt、.bytes，可含子目录（如 Core）。运行时按表名加载。 |
+| `AAAGame/Language`        | 多语言表导表产出：.json。运行时按语言资源名（如 English）加载。         |
+
+上述路径与编辑器中的 `ConstEditor.GameConfigPath`、`DataTablePath`、`LanguagePath` 一致；资源通常随 AssetBundle 或 Resources 打包，运行时通过 GF.Resource 加载。
+
+### 项目代码目录
+
+与配置表/数据表/多语言表**加载与使用**相关的代码分布在以下目录（均相对 `Assets/AAAGame`）：
+
+| 路径                         | 说明                                                                 |
+| ---------------------------- | -------------------------------------------------------------------- |
+| `Scripts/DataTable`          | 数据表导表生成的 C# 行类型与表结构代码（如 LevelTable.cs），热更程序集引用。 |
+| `Scripts/Extension`          | 运行时扩展方法：ConfigExtension、DataTableExtension、LocalizationExtension 等，封装 LoadConfig、LoadDataTable、LoadLanguage 及 A/B 表逻辑。 |
+| `Scripts/Procedures`         | 流程脚本：PreloadProcedure 中按 AppConfigs 加载配置表/数据表/多语言表。   |
+| `Scripts/ScriptableObject`   | AppConfigs 等 ScriptableObject，定义 Configs/DataTables/Languages 列表及 LoadFromBytes。 |
+| `ScriptsBuiltin/Runtime`     | 内置运行时（不可热更）：ConstBuiltin、路径与工具类等。                   |
+| `ScriptsBuiltin/Editor`      | 内置编辑器（仅编辑期）：GameDataGenerator、DataTableGenerator、AppConfigsInspector、ConstEditor，负责导表与 Inspector 配置。 |
+
+热更业务脚本（UI、Entity、Demo 等）位于 `Scripts` 下其他子目录，通过 `GF.Config`、`GF.DataTable`、`GF.Localization` 访问已加载的配置与数据；完整目录列表与说明见 [项目目录结构](项目目录结构.md) 的「4.3 三级（AAAGame 下）」表格。
+
+---
+
 本文档与 [项目目录结构](项目目录结构.md) 配套使用；路径与行为以当前代码为准（ConstEditor、GameDataGenerator、PreloadProcedure、各 Extension），若后续工具或路径变更请同步更新本文档。
