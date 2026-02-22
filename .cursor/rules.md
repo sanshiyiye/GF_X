@@ -215,6 +215,25 @@ Types:
 
 ---
 
+## 🎨 UI Quick Check
+
+When creating UI, confirm:
+
+```
+✅ 1. Inheritance: class XXXUIForm : UIFormBase (not UIFormLogic)
+✅ 2. Naming: Class name ends with UIForm, no Logic suffix
+✅ 3. ID: UIFormId.XXX is defined
+✅ 4. Path: File in Scripts/UI/{Category}/
+✅ 5. Lifecycle: OnInit → OnOpen → OnClose
+✅ 6. Events: Subscribe and Unsubscribe (in OnClose)
+✅ 7. API: Use GF.UI.Open/Close, not Instantiate/Destroy
+✅ 8. Data: Use UIFormData, no hard-coding
+```
+
+Full checklist: `Doc/AI-Reference/UI-Checklist.md`
+
+---
+
 ## ⚡ Quick Checklist
 
 Before submitting code, confirm:

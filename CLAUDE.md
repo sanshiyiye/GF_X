@@ -196,3 +196,22 @@ EntityLogic:
 ---
 
 **记住**：当你不确定时，查看 `Doc/AI-Reference/` 中的详细文档！
+
+---
+
+## 🎨 UI 快速检查
+
+创建 UI 时，确认：
+
+```
+✅ 1. 继承：class XXXUIForm : UIFormBase（不是 UIFormLogic）
+✅ 2. 命名：类名以 UIForm 结尾，无 Logic 后缀
+✅ 3. ID：UIFormId.XXX 已定义
+✅ 4. 路径：文件在 Scripts/UI/{Category}/ 下
+✅ 5. 生命周期：OnInit绑定 → OnOpen接收数据 → OnClose清理
+✅ 6. 事件：有订阅就有取消订阅（在 OnClose 中）
+✅ 7. API：用 GF.UI.Open/Close，不用 Instantiate/Destroy
+✅ 8. 数据：用 UIFormData 传递，无硬编码
+```
+
+完整检查清单：`Doc/AI-Reference/UI-Checklist.md`
