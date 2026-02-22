@@ -243,7 +243,7 @@ public class PreloadProcedure : ProcedureBase
 ```csharp
 // 对于不常用的资源，按需加载，用完即释放
 
-public class ShopUIFormLogic : UIFormLogic
+public class ShopUIFormBase : UIFormBase
 {
     private GameObject _shopItemPrefab;
     private List<GameObject> _itemInstances = new List<GameObject>();

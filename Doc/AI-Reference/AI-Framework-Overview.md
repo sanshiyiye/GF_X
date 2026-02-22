@@ -103,7 +103,7 @@ Assets/AAAGame/
 // 类名 - 大驼峰
 public class GameManager : MonoBehaviour { }
 public class MenuProcedure : ProcedureBase { }
-public class MainUIForm : UIFormLogic { }
+public class MainUIForm : UIFormBase { }
 
 // 接口 - I 前缀
 public interface IGameModule { }
@@ -255,7 +255,7 @@ public class MyNewProcedure : ProcedureBase
 ### 4.2 创建新UI界面
 
 ```csharp
-// 文件路径: Assets/AAAGame/Scripts/UI/MyUIFormLogic.cs
+// 文件路径: Assets/AAAGame/Scripts/UI/MyUIFormBase.cs
 
 using UnityGameFramework.Runtime;
 using UnityEngine;
@@ -264,7 +264,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 我的UI界面逻辑
 /// </summary>
-public class MyUIFormLogic : UIFormLogic
+public class MyUIFormBase : UIFormBase
 {
     // UI 组件引用
     [SerializeField]
@@ -642,7 +642,7 @@ using UnityGameFramework.Runtime;           // Unity 运行时
 Procedure:
   OnInit() -> OnEnter() -> [OnUpdate()...] -> OnLeave() -> [OnDestroy()]
 
-UIFormLogic:
+UIFormBase:
   OnInit() -> OnOpen() -> [OnUpdate()...] -> OnClose()
 
 EntityLogic:

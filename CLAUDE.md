@@ -97,7 +97,7 @@ Assets/AAAGame/Prefabs/
 |------|---------|------|
 | 普通类 | 大驼峰 | `GameManager`, `PlayerController` |
 | 流程类 | 大驼峰 + Procedure | `MenuProcedure`, `GameProcedure` |
-| UI 类 | 大驼峰 + UIFormLogic | `MainMenuUIFormLogic` |
+| UI 类 | 大驼峰 + UIFormBase | `MainMenuUIFormBase` |
 | 实体类 | 大驼峰 + EntityLogic | `PlayerEntityLogic` |
 | 数据表行 | DR + 大驼峰 | `DRItem`, `DRLevel` |
 | 接口 | I + 大驼峰 | `IManager`, `IPlayer` |
@@ -170,7 +170,7 @@ GF.Fsm          // 状态机（高级）
 Procedure:
   OnInit() → OnEnter() → [OnUpdate() × N] → OnLeave() → [OnDestroy()]
 
-UIFormLogic:
+UIFormBase:
   OnInit() → OnOpen() → [OnUpdate() × N] → OnClose()
 
 EntityLogic:

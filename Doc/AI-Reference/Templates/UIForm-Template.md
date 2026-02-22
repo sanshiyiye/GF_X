@@ -4,10 +4,10 @@
 
 ---
 
-## UIFormLogic 模板
+## UIFormBase 模板
 
 ```csharp
-// 文件路径: Assets/AAAGame/Scripts/UI/{Category}/{UIFormName}UIFormLogic.cs
+// 文件路径: Assets/AAAGame/Scripts/UI/{Category}/{UIFormName}UIFormBase.cs
 
 using UnityGameFramework.Runtime;
 using UnityEngine;
@@ -16,7 +16,7 @@ using UnityEngine.UI;
 /// <summary>
 /// {UIFormName} UI 界面逻辑
 /// </summary>
-public class {UIFormName}UIFormLogic : UIFormLogic
+public class {UIFormName}UIFormBase : UIFormBase
 {
     #region Serialize Fields
     
@@ -224,7 +224,7 @@ public class {UIFormName}ConfirmEventArgs : GameEventArgs
 
 ```bash
 # UI 逻辑脚本
-touch Assets/AAAGame/Scripts/UI/{Category}/{UIFormName}UIFormLogic.cs
+touch Assets/AAAGame/Scripts/UI/{Category}/{UIFormName}UIFormBase.cs
 
 # UI 预制体（在 Unity 中创建）
 # Assets/AAAGame/Prefabs/UI/{UIFormName}.prefab

@@ -119,7 +119,7 @@ void Start()
 
 ```csharp
 // ✅ 正确：使用序列化字段
-public class MyUIFormLogic : UIFormLogic
+public class MyUIFormBase : UIFormBase
 {
     [SerializeField]
     private Button _confirmButton;
@@ -319,7 +319,7 @@ void FireEvent()
 
 - [ ] 确定使用哪个 GF 模块 (UI/Entity/Resource/...)
 - [ ] 确认文件放在正确的目录 (Scripts/ vs ScriptsBuiltin/)
-- [ ] 确认继承正确的基类 (ProcedureBase/UIFormLogic/EntityLogic)
+- [ ] 确认继承正确的基类 (ProcedureBase/UIFormBase/EntityLogic)
 
 ### 编码中检查
 

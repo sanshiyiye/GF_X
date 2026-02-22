@@ -35,7 +35,7 @@ int attack = 100;  // 不要硬编码！
 ### 1.3 生命周期管理原则
 
 ```csharp
-public class MyUIFormLogic : UIFormLogic
+public class MyUIFormBase : UIFormBase
 {
     protected override void OnInit(object userData)
     {
@@ -326,7 +326,7 @@ public class PreloadProcedure : ProcedureBase
 }
 
 // ✅ 及时释放不用的资源
-public class ShopUIFormLogic : UIFormLogic
+public class ShopUIFormBase : UIFormBase
 {
     private GameObject _shopItemPrefab;
     
@@ -348,7 +348,7 @@ public class ShopUIFormLogic : UIFormLogic
 
 ```csharp
 // ✅ 对象池复用 UI 元素
-public class BagUIFormLogic : UIFormLogic
+public class BagUIFormBase : UIFormBase
 {
     private IObjectPool<UIItemLogic> _itemPool;
     private List<UIItemLogic> _activeItems = new List<UIItemLogic>();
@@ -386,7 +386,7 @@ public class BagUIFormLogic : UIFormLogic
 }
 
 // ✅ 减少 UI 层级和 Overdraw
-public class GameHudUIFormLogic : UIFormLogic
+public class GameHudUIFormBase : UIFormBase
 {
     protected override void OnOpen(object userData)
     {

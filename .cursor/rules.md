@@ -95,7 +95,7 @@ Assets/AAAGame/Prefabs/
 |------|------|---------|
 | Regular Class | PascalCase | `GameManager`, `PlayerController` |
 | Procedure Class | PascalCase + Procedure | `MenuProcedure`, `GameProcedure` |
-| UI Class | PascalCase + UIFormLogic | `MainMenuUIFormLogic` |
+| UI Class | PascalCase + UIFormBase | `MainMenuUIFormBase` |
 | Entity Class | PascalCase + EntityLogic | `PlayerEntityLogic` |
 | Data Row Class | DR + PascalCase | `DRItem`, `DRLevel` |
 | Interface | I + PascalCase | `IManager`, `IPlayer` |
@@ -168,7 +168,7 @@ GF.Fsm          // State Machine (advanced)
 Procedure:
   OnInit() → OnEnter() → [OnUpdate() × N] → OnLeave() → [OnDestroy()]
 
-UIFormLogic:
+UIFormBase:
   OnInit() → OnOpen() → [OnUpdate() × N] → OnClose()
 
 EntityLogic:
