@@ -23,3 +23,8 @@
 /HybridCLRData
 *.DS_Store
 /Assets/Resources/AotDlls
+
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
