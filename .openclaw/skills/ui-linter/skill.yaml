@@ -1,0 +1,95 @@
+name: gf-x-ui-linter
+description: "GF_X UI 代码规范检查工具 - 自动检查 UI 代码是否符合框架规范"
+version: "1.0.0"
+author: "GF_X Team"
+
+actions:
+  lint_file:
+    description: "检查单个 UI 代码文件"
+    parameters:
+      file_path:
+        type: string
+        description: "UI 代码文件的完整路径"
+        required: true
+    returns:
+      success: boolean
+      issues: array
+      summary: string
+      
+  lint_directory:
+    description: "检查整个 UI 目录"
+    parameters:
+      directory_path:
+        type: string
+        description: "UI 代码目录的路径"
+        required: true
+      recursive:
+        type: boolean
+        description: "是否递归检查子目录"
+        default: true
+    returns:
+      success: boolean
+      total_files: integer
+      passed_files: integer
+      failed_files: integer
+      issues: array
+      summary: string
+      
+  fix_auto:
+    description: "自动修复简单问题"
+    parameters:
+      file_path:
+        type: string
+        description: "要修复的文件路径"
+        required: true
+      dry_run:
+        type: boolean
+        description: "试运行模式，不实际修改文件"
+        default: true
+    returns:
+      success: boolean
+      fixed_issues: array
+      remaining_issues: array
+      summary: string
+
+rules:
+  - id: inheritance
+    name: "继承检查"
+    description: "UI 类必须继承 UIFormBase"
+    severity: error
+    
+  - id: naming
+    name: "命名规范"
+    description: "类名必须以 UIForm 结尾，无 Logic 后缀"
+    severity: error
+    
+  - id: lifecycle
+    name: "生命周期"
+    description: "事件订阅必须在 OnClose 中取消"
+    severity: warning
+    
+  - id: api_usage
+    name: "API 使用"
+    description: "必须使用 GF.UI，禁止 Instantiate/Destroy"
+    severity: error
+    
+  - id: data_driven
+    name: "数据驱动"
+    description: "必须使用 UIFormData，禁止硬编码"
+    severity: warning
+
+examples:
+  - description: "检查单个文件"
+    command: |
+      skill: gf-x-ui-linter
+      action: lint_file
+      parameters:
+        file_path: "/data/GF_X/Assets/AAAGame/Scripts/UI/Menu/ShopUIForm.cs"
+    
+  - description: "检查整个目录"
+    command: |
+      skill: gf-x-ui-linter
+      action: lint_directory
+      parameters:
+        directory_path: "/data/GF_X/Assets/AAAGame/Scripts/UI/"
+        recursive: true
