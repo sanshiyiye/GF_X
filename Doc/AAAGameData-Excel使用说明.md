@@ -104,6 +104,22 @@ flowchart LR
 
 编辑模式产出的 DataTable 的 .txt/.bytes 与 `Scripts/DataTable` 下 C# 代码即运行模式所加载的数据与类型来源。
 
+### 3.4 数据表 Excel 行格式（必读）
+
+本项目的 DataTable 导表工具**固定要求** Excel（或导出后的 .txt）至少包含 **5 行**，行下标由 [DataTableGenerator.CreateDataTableProcessor](Assets/AAAGame/ScriptsBuiltin/Editor/DataTableGenerator/DataTableGenerator.cs) 写死（nameRow=1, typeRow=2, commentRow=3, contentStartRow=4）。**行数不足会报错**：`GameFrameworkException: Comment row '3' >= raw row count '3' is not allow.`
+
+| 行号（0-based） | 用途     | 说明 |
+|-----------------|----------|------|
+| **第 1 行（0）** | 标题行   | 第一列一般为 `#`，第二列可写表名或留空；整行可为注释。 |
+| **第 2 行（1）** | 字段名   | 第一列 `#`，第二列起为各列字段名（如 Id、LevelMin）；字段名须以大写字母开头、仅含字母/数字/下划线。 |
+| **第 3 行（2）** | 类型     | 第一列 `#`，第二列起为类型（int、string、bool、intArray 等）。 |
+| **第 4 行（3）** | 注释行   | 第一列 `#`，第二列起为各列说明（可空或填中文备注）。 |
+| **第 5 行起（4+）** | 数据行   | 第一列可为 `#` 或空，**第二列为主键 Id**（idColumn=1），其后为各列数据。 |
+
+- **主键**：主键列索引为 1（第二列），通常命名为 `Id`，类型为 int。
+- **首列**：第 0 列通常为 `#` 或空，用于注释/标题，导表时可能被忽略或作为注释标记。
+- **参考**：可对照已导出的 `Assets/AAAGame/DataTable/LevelTable.txt`、`Core/UITable.txt` 的格式；新表需与之一致，否则导表失败。
+
 ---
 
 ## 四、多语言表（Language）流程
@@ -153,7 +169,7 @@ flowchart LR
 ## 五、A/B Test 与 Excel 约定
 
 - **A/B Test 表**：命名规则为 `[主表文件名]#[测试组名].xlsx`（如 `GameConfig#GroupA.xlsx`），代码中通过 `#`（`ConstBuiltin.AB_TEST_TAG`）识别；导表时主表与 AB 表一并导出，运行时通过 `GF.Setting.SetABTestGroup("GroupName")` 分配测试组后加载对应表。
-- **Excel 与 Sheet**：每个 Excel 使用**第一个 Sheet** 导表；数据表/配置表的列格式与类型由 GF DataTable/Config 及项目内 DataTableGenerator 等定义，新表可参考现有 Excel 或导表错误提示调整。
+- **Excel 与 Sheet**：每个 Excel 使用**第一个 Sheet** 导表。**数据表**必须满足 **3.4 数据表 Excel 行格式**（至少 5 行：标题、字段名、类型、注释、数据），否则会报 `Comment row '3' >= raw row count`；配置表的列格式与类型由项目内导表工具定义，新表可参考现有 Excel 或导表错误提示调整。
 
 ---
 
